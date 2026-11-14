@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ipcalc-app
+    ports:
+      - "8086:8086"
+    environment:
+      PORT: "8086"
+      WATCHFILES_FORCE_POLLING: "true"
+    volumes:
+      - .:/app
+      - /app/.venv
+      - /app/__pycache__
+    command: ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port 8086 --reload"]
+    restart: unless-stopped
